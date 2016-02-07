@@ -31,53 +31,53 @@ como primeiro argumento do double.
 
 Por exemplo, ao criar um stub para um método inexistente...
 
-```ruby
+{% highlight ruby %}
 comment = instance_double('Comment')
 expect(comment).to receive(:risos)
-```
+{% endhighlight %}
 
 ... o RSpec falha o teste e exibe a seguinte mensagem:
 
-```text
+{% highlight text %}
 Comment does not implement: risos
-```
+{% endhighlight %}
 
 Ao criar um stub com argumentos a menos que os esperados...
 
-```ruby
+{% highlight ruby %}
 comment = instance_double('Comment')
 expect(comment).to receive(:risos).with('a')
-```
+{% endhighlight %}
 
 ... o RSpec também falha:
 
-```text
+{% highlight text %}
 Wrong number of arguments. Expected 2, got 1.
-```
+{% endhighlight %}
 
 Porém, quando um *instance_double* é criado para uma classe inexistente, nada
 acontece. Esse problema é facilmente resolvido através da seguinte configuração
 do RSpec:
 
-```ruby
+{% highlight ruby %}
 RSpec.configure do |config|
   config.mock_with :rspec do |mocks|
     mocks.verify_doubled_constant_names = true
   end
 end
-```
+{% endhighlight %}
 
 Assim, ao tentar criar um *instance_double* de uma classe inexistente...
 
-```ruby
+{% highlight ruby %}
 comment = instance_double('Coment')
-```
+{% endhighlight %}
 
 ... o RSpec falha com a seguinte mensagem:
 
-```text
+{% highlight text %}
 Coment is not a defined constant. Perhaps you misspelt it?
-```
+{% endhighlight %}
 
 É importante, porém, salientar que o *instance_double* **não sabe verificar
 métodos implementados através de method_missing**. Isso é resolvido por outros
@@ -90,16 +90,16 @@ a diferença é que, neste caso, as verificações são contra métodos de class
 
 Por exemplo, ao criar um stub para um método de classe inexistente...
 
-```ruby
+{% highlight ruby %}
 comment = class_double('Comment')
 expect(comment).to receive(:something)
-```
+{% endhighlight %}
 
 ... o RSpec falha da mesma forma:
 
-```text
+{% highlight text %}
 Comment does not implement: something
-```
+{% endhighlight %}
 
 ## object_double
 
@@ -109,10 +109,10 @@ sabe verificar métodos que fazem uso de method_missing.
 
 Por exemplo, ao criar um stub para um método inexistente...
 
-```ruby
+{% highlight ruby %}
 comment = object_double(Comment.new)
 #<Comment:0x00000105eb7908> does not implement: something
-```
+{% endhighlight %}
 
 ... o RSpec falha, exatamente como acontece com outros doubles.
 
@@ -121,10 +121,10 @@ comment = object_double(Comment.new)
 Um *partial double* é, basicamente, uma extensão de um objeto real. Por exemplo,
 quando escrevemos o seguinte código...
 
-```ruby
+{% highlight ruby %}
 comment = double('comment')
 allow(Comment).to receive(:find) { comment }
-```
+{% endhighlight %}
 
 ... estamos criando um partial double para a classe *Comment*. Um problema
 comum com esse tipo de double é que, caso a classe/objeto não implemente o
@@ -137,26 +137,26 @@ verifying doubles são executadas para os partial doubles.
 
 Para ativar, basta configurar o RSpec da seguinte forma:
 
-```ruby
+{% highlight ruby %}
 RSpec.configure do |config|
   config.mock_with :rspec do |mocks|
     mocks.verify_partial_doubles = true
   end
 end
-```
+{% endhighlight %}
 
 Assim, quando um stub é criado para um método inexistente...
 
-```ruby
+{% highlight ruby %}
 comment = double('comment')
 allow(Comment).to receive(:blah) { comment }
-```
+{% endhighlight %}
 
 ... o teste falha:
 
-```text
+{% highlight text %}
 Comment does not implement: blah
-```
+{% endhighlight %}
 
 ## Finalizando
 

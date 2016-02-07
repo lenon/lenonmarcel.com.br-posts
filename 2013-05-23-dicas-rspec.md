@@ -12,7 +12,7 @@ escrever testes concisos e expressivos.
 
 É possível definir condições para um bloco *before*:
 
-```ruby
+{% highlight ruby %}
 describe Something do
   before(:each, mycondition: true) do
     puts "hey"
@@ -26,7 +26,7 @@ describe Something do
     # code...
   end
 end
-```
+{% endhighlight %}
 
 No exemplo acima, o before será executado apenas no primeiro bloco *it*, pois
 ele possui o metadado *mycondition* definido como *true*.
@@ -35,9 +35,9 @@ ele possui o metadado *mycondition* definido como *true*.
 
 Desde o RSpec 2.11 uma nova sintaxe de expectativas (!?) está disponível:
 
-```ruby
+{% highlight ruby %}
 expect(subject.something).to be_true
-```
+{% endhighlight %}
 
 Apesar do já conhecido *should* ser mais elegante, ele nem sempre é confiável.
 Basicamente o RSpec precisa definí-lo em todos os objetos do sistema, o problema
@@ -52,7 +52,7 @@ exatamente o problema do *should*, leia [este excelente post][2].
 Assim como em métodos normais do Ruby, é possível utilizar a keyword *super*
 para fazer overriding nos blocos *subject*, *let* e *let!*:
 
-```ruby
+{% highlight ruby %}
 describe MyClass do
   subject { MyClass.new("something") }
 
@@ -60,14 +60,14 @@ describe MyClass do
     subject { super().whatever }
   end
 end
-```
+{% endhighlight %}
 
 Uma observação importante é que você deve utilizar os parênteses *()* ao invocar
 *super*. Do contrário, você receberá um erro *RuntimeError*:
 
-```text
+{% highlight text %}
 RuntimeError: implicit argument passing of super from method defined by define_method() is not supported. Specify all arguments explicitly.
-```
+{% endhighlight %}
 
 ## Described class
 
@@ -75,13 +75,13 @@ Ao descrever uma classe, o RSpec disponibiliza o método *described_class*, que
 retorna a classe que a spec descreve. Você pode utilizá-lo, por exemplo, para
 criar novas instâncias dessa mesma classe:
 
-```ruby
+{% highlight ruby %}
 describe MyClass do
   describe ".whatever" do
     let(:bla) { described_class.new("something") }
   end
 end
-```
+{% endhighlight %}
 
 Isso facilita um futuro refactoring, evitando que você tenha que escrever o nome
 da classe por todo lado.
@@ -91,12 +91,12 @@ da classe por todo lado.
 O RSpec possui alguns métodos para descrição de specs. Os mais conhecidos são
 *it*, *describe* e *context*. Há, além desses, o *specify*:
 
-```ruby
+{% highlight ruby %}
 describe MyClass do
   subject { described_class.new("Something") }
   specify { subject.title.should eql("Something") }
 end
-```
+{% endhighlight %}
 
 Funcionalmente não há nenhuma diferença entre *it* e *specify*. O último é
 apenas um alias para o primeiro e seu uso deve ser feito com o objetivo de
@@ -107,7 +107,7 @@ deixar as specs mais expressivas e legíveis.
 Outro método útil para deixar as specs mais expressivas é o *its*. Ele pode ser
 utilizado ao descrever objetos de retorno:
 
-```ruby
+{% highlight ruby %}
 describe MyApi do
   describe "GET /foo/bar" do
     before { get "/foo/bar" }
@@ -118,31 +118,31 @@ describe MyApi do
     its(:body) { should include "foobarbaz" }
   end
 end
-```
+{% endhighlight %}
 
 Ele suporta, ainda, coisas como nested attributes:
 
-```ruby
+{% highlight ruby %}
 its("phone_numbers.size") { should eq(2) }
-```
+{% endhighlight %}
 
 E Hashes:
 
-```ruby
+{% highlight ruby %}
 subject do
   { key: "value" }
 end
 its([:key]) { should eq "value" }
-```
+{% endhighlight %}
 
 ## Satisfy
 
 O *satisfy* é um dos matchers mais flexíveis disponíveis no RSpec. Ele aceita um
 bloco e espera que o retorno seja *true* para um teste executado com sucesso:
 
-```ruby
+{% highlight ruby %}
 expect(subject.created_at).to satisfy { |time| (0..5).include? Time.now.to_i - time.to_i }
-```
+{% endhighlight %}
 
 O único problema é que a mensagem de saída é algo como "expected something to
 satisfy block", ou seja, não é muito clara.

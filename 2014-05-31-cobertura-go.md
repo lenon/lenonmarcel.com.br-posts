@@ -10,9 +10,9 @@ um programa são exercitadas por uma determinada suite de testes.
 Para gerar a cobertura de um código escrito em [Go][1], é possível utilizar a
 ferramenta *go test* da seguinte forma:
 
-```bash
+{% highlight bash %}
 go test -coverprofile=cover.out
-```
+{% endhighlight %}
 
 Com a flag *-coverprofile* o comando gera um arquivo de saída com todos os dados
 de cobertura de código.
@@ -23,15 +23,15 @@ estão sem cobertura.
 
 Para instalar a ferramenta, basta usar *go get*:
 
-```bash
+{% highlight bash %}
 go get code.google.com/p/go.tools/cmd/cover
-```
+{% endhighlight %}
 
 O arquivo HTML é gerado com o seguinte comando:
 
-```bash
+{% highlight bash %}
 go tool cover -html=cover.out -o cover.html
-```
+{% endhighlight %}
 
 É possível omitir a flag *-o*, assim o comando abre o HTML gerado diretamente no
 navegador.
@@ -40,25 +40,25 @@ navegador.
 
 Instale a ferramenta de cobertura através do *go get*:
 
-```bash
+{% highlight bash %}
 go get code.google.com/p/go.tools/cmd/cover
-```
+{% endhighlight %}
 
 Utilize o seguinte shell script para gerar o arquivo *profile* e o HTML da
 cobertura:
 
-```bash
+{% highlight bash %}
 cover () {
     profile="$(mktemp -dt $$)/cover.out"
     go test -coverprofile="$profile" $@ && go tool cover -html="$profile"
 }
-```
+{% endhighlight %}
 
 Execute no diretório do seu código:
 
-```bash
+{% highlight bash %}
 cover
-```
+{% endhighlight %}
 
 O HTML da cobertura será aberto no seu navegador.
 
